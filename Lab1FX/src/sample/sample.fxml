@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="430.0" style="-fx-background-color: #B9DCFD;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="430.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="mmOpen" mnemonicParsing="false" text="Open..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="mmExit" mnemonicParsing="false" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Control">
+            <items>
+              <MenuItem fx:id="mmEncrypt" disable="true" mnemonicParsing="false" text="Encrypt" />
+                  <MenuItem fx:id="mmDecrypt" disable="true" mnemonicParsing="false" text="Decrypt" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="mmGenKey" mnemonicParsing="false" text="Generate key" />
+                  <MenuItem fx:id="mmCopyKey" mnemonicParsing="false" text="Copy key" />
+                  <MenuItem fx:id="mmChoose" mnemonicParsing="false" text="Choose method" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="About">
+            <items>
+              <MenuItem fx:id="mmHelp" mnemonicParsing="false" text="Help" />
+                  <MenuItem fx:id="mmHotKeys" mnemonicParsing="false" text="Hot keys" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="mmAboutProgram" mnemonicParsing="false" text="About program" />
+                  <MenuItem fx:id="mmAboutAuthor" mnemonicParsing="false" text="About author" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Pane layoutY="167.0" prefHeight="58.0" prefWidth="430.0" style="-fx-background-color: #C1C1C1; -fx-border-width: 1 0 0 0; -fx-border-color: #626262;">
+         <children>
+            <Button fx:id="exitBtn" layoutX="304.0" layoutY="6.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="121.0" text="Exit">
+               <font>
+                  <Font name="GOST Common" size="22.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="helpBtn" layoutX="5.0" layoutY="6.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="121.0" text="Help">
+               <font>
+                  <Font name="GOST Common" size="22.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="8.0" layoutY="14.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/help.png" />
+               </image></ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="308.0" layoutY="17.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/exit.png" />
+               </image></ImageView>
+            <Pane fx:id="hintPane" layoutX="140.0" layoutY="14.0" opacity="0.0" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #F6F6D3 #F6F6D3; -fx-border-color: #3B3B3B; -fx-border-radius: 5; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="myTextHint" alignment="CENTER" layoutY="8.0" prefHeight="17.0" prefWidth="150.0" text="TextHint" textFill="#000000fa" />
+               </children>
+            </Pane>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Pane>
+      <Button fx:id="browseBtn" layoutX="320.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Browse...">
+         <font>
+            <Font name="GOST Common" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="genBtn" layoutX="320.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Generate">
+         <font>
+            <Font name="GOST Common" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="encryptBtn" disable="true" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" text="Encrypt">
+         <font>
+            <Font name="GOST Common" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="decryptBtn" disable="true" layoutX="178.0" layoutY="120.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="138.0" text="Decrypt">
+         <font>
+            <Font name="GOST Common" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fx:id="closeLockImg" fitHeight="18.0" fitWidth="15.0" layoutX="29.0" layoutY="131.0" mouseTransparent="true" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/images/lockClose.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="openLockImg" fitHeight="18.0" fitWidth="15.0" layoutX="193.0" layoutY="131.0" mouseTransparent="true" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/images/lockOpen.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="14.0" layoutY="39.0" prefHeight="27.0" prefWidth="302.0" style="-fx-background-color: #C7C8CC; -fx-background-radius: 8; -fx-border-width: 1; -fx-border-color: #444444; -fx-border-radius: 8;">
+         <children>
+            <TextField fx:id="fileField" layoutX="22.0" prefHeight="18.0" prefWidth="280.0" promptText="File directory or plaintext" style="-fx-border-color: #656565;" />
+            <ImageView fx:id="folderBtn" accessibleRole="BUTTON" fitHeight="18.0" fitWidth="30.0" layoutX="3.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/folder.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="87.0" prefHeight="27.0" prefWidth="302.0" style="-fx-background-color: #C7C8CC; -fx-background-radius: 8; -fx-border-width: 1; -fx-border-color: #444444; -fx-border-radius: 8 0 0 8;">
+         <children>
+            <ImageView fx:id="keyBtn" accessibleRole="BUTTON" fitHeight="18.0" fitWidth="30.0" layoutX="3.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/3643767-key-keys-main-password-privilege_113429.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="eyeBtn" accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="276.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/eye_close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <TextField fx:id="keyField" layoutX="22.0" prefHeight="18.0" prefWidth="255.0" promptText="Key" style="-fx-border-color: #656565;" />
+            <PasswordField fx:id="keyPass" layoutX="22.0" prefHeight="18.0" prefWidth="255.0" promptText="Key" style="-fx-border-color: #656565;" />
+         </children>
+      </Pane>
+      <Button fx:id="chooseBtn" layoutX="320.0" layoutY="120.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="104.0" text="Method">
+         <font>
+            <Font name="GOST Common" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

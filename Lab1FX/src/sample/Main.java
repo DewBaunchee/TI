@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.scene.control.TextInputDialog;
-import sample.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,13 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.Optional;
 
 public class Main extends Application {
 
     public static Parent root;
-    public static String rootDir = new File("").getAbsolutePath();
 
     @Override
     public void start(Stage primaryStage) throws Exception {

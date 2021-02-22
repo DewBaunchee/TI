@@ -11,6 +11,13 @@ public class Variant4 {
     public static String rusExcept = "[^А-Яа-я]";
     public static String engExcept = "[^A-Za-z]";
 
+    private static boolean isInvalidKey(String key, String alphabet) {
+        for(int i = 0; i < key.length(); i++) {
+            if(!alphabet.contains(key.charAt(i) + "")) return true;
+        }
+        return false;
+    }
+
     public static void encrypt(File file, String key, int encryptionMethod) throws Exception {
         String plaintext = inputPlaintext(file).toUpperCase(Locale.ROOT);
         key = key.toUpperCase(Locale.ROOT);
@@ -18,12 +25,14 @@ public class Variant4 {
         String output = "";
         switch (encryptionMethod) {
             case 1:
+                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain only russian symbols.");
                 output = vigenereMethod(plaintext, key);
                 break;
             case 2:
                 output = pleupherMethod(plaintext);
                 break;
             case 3:
+                if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
                 output = railFenceMethod(plaintext, key);
                 break;
         }
@@ -37,10 +46,12 @@ public class Variant4 {
 
         switch (encryptionMethod) {
             case 1:
+                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain only russian symbols.");
                 return vigenereMethod(plaintext, key);
             case 2:
                 return pleupherMethod(plaintext);
             case 3:
+                if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
                 return railFenceMethod(plaintext, key);
         }
         return null;
@@ -68,12 +79,14 @@ public class Variant4 {
         String output = "";
         switch (encryptionMethod) {
             case 1:
+                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain only russian symbols.");
                 output = deVigenereMethod(plaintext, key);
                 break;
             case 2:
                 output = dePleupherMethod(plaintext);
                 break;
             case 3:
+                if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
                 output = deRailFenceMethod(plaintext, key);
                 break;
         }
@@ -86,10 +99,12 @@ public class Variant4 {
         key = key.toUpperCase(Locale.ROOT);
         switch (encryptionMethod) {
             case 1:
+                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain only russian symbols.");
                 return deVigenereMethod(plaintext, key);
             case 2:
                 return dePleupherMethod(plaintext);
             case 3:
+                if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
                 return deRailFenceMethod(plaintext, key);
         }
         return null;
@@ -133,14 +148,6 @@ public class Variant4 {
 
         if (answer.length() == 0) return plaintext;
         return answer.toString();
-/*
-это лабораторная работа по киоки
-4
-
-Lorem ipsum dolor sit amet
-crypto
-
-*/
     }
 
     private static String deRailFenceMethod(String cypherText, String inputKey) {
@@ -247,10 +254,6 @@ crypto
 
         if (answer.length() == 0) return plaintext;
         return answer.toString();
-/*
-Ciphertext
-
- */
     }
 
     private static String dePleupherMethod(String plaintext) throws Exception {
@@ -324,11 +327,6 @@ Ciphertext
 
         if (answer.length() == 0) return plaintext;
         return answer.toString();
-/*
-CRYPTOGRAPHY AND DATA SECURITY
-mouse
-
-*/
     }
 
     private static String deVigenereMethod(String plaintext, String inputKey) {

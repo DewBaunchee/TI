@@ -395,19 +395,24 @@ public class Controller {
                 case "Vigenere":
                     encryptionMethod = 1;
                     language = 2;
+                    keyField.setPromptText("Key");
+                    eyeBtn.setDisable(false);
                     keyField.setDisable(false);
                     keyPass.setVisible(true);
                     break;
                 case "Playfair":
                     encryptionMethod = 2;
                     language = 1;
-                    keyField.setText("Unnecessary");
+                    keyField.setPromptText("Unnecessary");
+                    eyeBtn.setDisable(true);
                     keyField.setDisable(true);
                     keyPass.setVisible(false);
                     break;
                 case "Rail fence":
                     encryptionMethod = 3;
                     language = 1;
+                    keyField.setPromptText("Key");
+                    eyeBtn.setDisable(false);
                     keyField.setDisable(false);
                     keyPass.setVisible(true);
                     break;
@@ -437,6 +442,7 @@ public class Controller {
         myTextHint.setText(content);
         hintPane.setOpacity(1);
         (new Timer()).schedule(new TimerTask() {
+
             @Override
             public void run() {
                 AnimationTimer fading = new MyTimer();
@@ -448,12 +454,7 @@ public class Controller {
     void executeOpenFileDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.txt", "*.doc", "*.docx", "*.html", "*.pdf", "*.rtf", "*.jpg", "*.jpeg", "*.bmp", "*.png", "*.mp3", "*.mp4", "*.avi", "*.mov", "*.flv", "*.vma"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Encrypted files (vma)", "*.vma"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (txt, doc, docx, html, pdf, rtf)", "*.txt", "*.doc", "*.docx", "*.html", "*.pdf", "*.rtf"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images (jpg, jpeg, bmp, png)", "*.jpg", "*.jpeg", "*.bmp", "*.png"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Audio files (mp3)", "*.mp3"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Video files (mp4, avi, mov, flv)", "*.mp4", "*.avi", "*.mov", "*.flv"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files (txt)", "*.txt"));
         opFile = fileChooser.showOpenDialog(Main.root.getScene().getWindow());
         if (opFile != null) {
             fileField.setText(opFile.getAbsolutePath());

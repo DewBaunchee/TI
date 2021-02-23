@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Variant4 {
-    public static String rusExcept = "[^А-Яа-я]";
+public class Cypher {
+    public static String rusExcept = "[^А-Яа-яёЁ]";
     public static String engExcept = "[^A-Za-z]";
 
     private static boolean isInvalidKey(String key, String alphabet) {
@@ -33,6 +33,8 @@ public class Variant4 {
                 break;
             case 3:
                 if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
+                if(Integer.parseInt(key) < 2 || Integer.parseInt(key) > plaintext.length())
+                    throw new Exception("Key must be bigger than 2 and lesser than plaintext length.");
                 output = railFenceMethod(plaintext, key);
                 break;
         }
@@ -46,12 +48,14 @@ public class Variant4 {
 
         switch (encryptionMethod) {
             case 1:
-                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain only russian symbols.");
+                if(isInvalidKey(key, rusAlphabet)) throw new Exception("Key must contain russian symbols.");
                 return vigenereMethod(plaintext, key);
             case 2:
                 return pleupherMethod(plaintext);
             case 3:
                 if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
+                if(Integer.parseInt(key) < 2 || Integer.parseInt(key) > plaintext.length())
+                    throw new Exception("Key must be bigger than 2 and lesser than plaintext length.");
                 return railFenceMethod(plaintext, key);
         }
         return null;
@@ -70,7 +74,7 @@ public class Variant4 {
             plaintext.append(fileScanner.nextLine()).append("\n");
         }
         fileScanner.close();
-        return plaintext.toString();
+        return plaintext.substring(0, plaintext.length() - 1);
     }
 
     public static void decrypt(File file, String key, int encryptionMethod) throws Exception {
@@ -87,6 +91,8 @@ public class Variant4 {
                 break;
             case 3:
                 if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
+                if(Integer.parseInt(key) < 2 || Integer.parseInt(key) > plaintext.length())
+                    throw new Exception("Key must be bigger than 2 and lesser than plaintext length.");
                 output = deRailFenceMethod(plaintext, key);
                 break;
         }
@@ -105,6 +111,8 @@ public class Variant4 {
                 return dePleupherMethod(plaintext);
             case 3:
                 if(isInvalidKey(key, "0123456789")) throw new Exception("Key must contain only digits.");
+                if(Integer.parseInt(key) < 2 || Integer.parseInt(key) > plaintext.length())
+                    throw new Exception("Key must be bigger than 2 and lesser than plaintext length.");
                 return deRailFenceMethod(plaintext, key);
         }
         return null;
@@ -151,7 +159,7 @@ public class Variant4 {
     }
 
     private static String deRailFenceMethod(String cypherText, String inputKey) {
-        cypherText = cypherText.toUpperCase(Locale.ROOT).trim();
+        cypherText = cypherText.trim();
         int key = Integer.parseInt(inputKey);
 
         char[] answer = new char[cypherText.length()];
@@ -257,6 +265,7 @@ public class Variant4 {
     }
 
     private static String dePleupherMethod(String plaintext) throws Exception {
+        plaintext = plaintext.replaceAll(engExcept, "");
         String[][] table = {
                 {"C", "R", "Y", "P", "T"},
                 {"O", "G", "A", "H", "B"},
@@ -310,7 +319,7 @@ public class Variant4 {
 
     // МЕТОД ВИЖЕНЕРА
     public static String vigenereMethod(String plaintext, String inputKey) { // РУССКИЙ
-        StringBuilder key = new StringBuilder(inputKey.replaceAll(rusExcept, "").toUpperCase(Locale.ROOT));
+        StringBuilder key = new StringBuilder(inputKey.toUpperCase(Locale.ROOT));
         plaintext = plaintext.toUpperCase(Locale.ROOT).replaceAll(rusExcept, "");
         StringBuilder answer = new StringBuilder();
 
@@ -330,7 +339,7 @@ public class Variant4 {
     }
 
     private static String deVigenereMethod(String plaintext, String inputKey) {
-        StringBuilder key = new StringBuilder(inputKey.replaceAll(rusExcept, "").toUpperCase(Locale.ROOT));
+        StringBuilder key = new StringBuilder(inputKey.toUpperCase(Locale.ROOT));
         plaintext = plaintext.toUpperCase(Locale.ROOT);
         StringBuilder answer = new StringBuilder();
 

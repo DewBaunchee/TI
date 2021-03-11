@@ -28,6 +28,9 @@ public class Controller {
     private Button printBtn;
 
     @FXML
+    private Button printKeyBtn;
+
+    @FXML
     private Button RC4Btn;
 
     @FXML
@@ -106,7 +109,26 @@ public class Controller {
 
         keyField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[01]*")) keyField.setText(oldValue);
-            lengthLabel.setText("LSRF length: " + newValue.length());
+            lengthLabel.setText("LFSR length: " + newValue.length());
+        });
+
+        printKeyBtn.setOnAction(actionEvent -> {
+            if(keyField.getText().length() > 2) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Полином: a^").append(keyField.getText().length()).append(" + a^1 + 1").append("\n");
+                sb.append("Начальное состояние: ").append(keyField.getText()).append("\n\n");
+
+                LFSR lfsr = new LFSR(StreamCypher.stringToBoolArr(keyField.getText()));
+                for(int i = 0; i < keyField.getText().length() + 20; i++) {
+                    sb.append("После такта №").append(i + 1).append(":\n");
+                    sb.append("Сгенерированный ключ: ").append(lfsr.getNext() ? "1" : "0").append("\n");
+                    sb.append("Состояние регистра: ").append(lfsr.toString()).append("\n\n");
+                }
+
+                printLog(sb.toString());
+            } else {
+                showMsg("Error", "Enter key.", Alert.AlertType.ERROR);
+            }
         });
     }
 
@@ -175,7 +197,7 @@ public class Controller {
 
             try {
                 while (!socket.isInterrupted() || fromCypher.size() > 0) {
-                    Byte part = fromCypher.poll(2500, TimeUnit.MILLISECONDS); // В КОНЦЕ ОЖИДАЕТ ПОЧЕМУ????
+                    Byte part = fromCypher.poll(2500, TimeUnit.MILLISECONDS);
                     if(part == null) break;
                     fos.write(part);
                 }

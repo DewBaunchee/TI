@@ -18,7 +18,7 @@ public class Main extends Application {
         root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Stream cypher");
         primaryStage.setScene(new Scene(root, 550, 500));
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinWidth(750);
         primaryStage.setMinHeight(550);
         primaryStage.show();
     }

@@ -2,38 +2,34 @@ package sample;
 
 public class StreamCypher {
     public final boolean[] startValue;
-    public LSRF lsrf;
+    public LFSR lfsr;
 
     public StreamCypher(boolean[] inStartValue) {
         startValue = inStartValue;
-        lsrf = new LSRF(startValue);
+        lfsr = new LFSR(startValue);
     }
 
     public byte transformByte(byte current) {
-        byte keyByte = getKeyByte(lsrf);
+        byte keyByte = getKeyByte(lfsr);
         return (byte) (current ^ keyByte);
     }
 
-    public void reset() {
-        lsrf = new LSRF(startValue);
-    }
-
-    private static byte getKeyByte(LSRF lsrf) {
+    private static byte getKeyByte(LFSR lfsr) {
         byte answer = 0;
         for(int i = 0; i < 7; i++) {
-            answer = (byte) (answer | (lsrf.getNext() ? 1 : 0));
+            answer = (byte) (answer | (lfsr.getNext() ? 1 : 0));
             answer = (byte) (answer << 1);
         }
-        return (byte) (answer | (lsrf.getNext() ? 1 : 0));
+        return (byte) (answer | (lfsr.getNext() ? 1 : 0));
     }
 
     public static byte[] transformByteArray(byte[] array, String startLSRF) {
         boolean[] startKey = stringToBoolArr(startLSRF);
         if(startKey == null) return null;
-        LSRF lsrf = new LSRF(startKey);
+        LFSR lfsr = new LFSR(startKey);
 
         for(int i = 0; i < array.length; i++) {
-            byte keyByte = getKeyByte(lsrf);
+            byte keyByte = getKeyByte(lfsr);
             array[i] = (byte) (array[i] ^ keyByte);
         }
         return array;
@@ -42,11 +38,11 @@ public class StreamCypher {
     public static String transformForLog(byte[] array, String startLSRF) {
         boolean[] startKey = stringToBoolArr(startLSRF);
         if(startKey == null) return null;
-        LSRF lsrf = new LSRF(startKey);
+        LFSR lfsr = new LFSR(startKey);
         StringBuilder answer = new StringBuilder();
 
         for(int i = 0; i < array.length; i++) {
-            byte keyByte = getKeyByte(lsrf);
+            byte keyByte = getKeyByte(lfsr);
             answer.append(toBit(array[i])).append("(")
                     .append((char) array[i]).append(") ^ ")
                     .append(toBit(keyByte)).append(" = ");
@@ -59,23 +55,23 @@ public class StreamCypher {
     }
 
     public static String toBit(byte b) {
-        String answer = Integer.toBinaryString(b);
+        StringBuilder answer = new StringBuilder(Integer.toBinaryString(b));
         if(answer.length() > 8) {
-            answer = answer.substring(24);
+            answer = new StringBuilder(answer.substring(24));
         } else {
-            while (answer.length() < 8) answer = "0" + answer;
+            while (answer.length() < 8) answer.insert(0, "0");
         }
-        return answer;
+        return answer.toString();
     }
 
     public static boolean[] getWholeKey(int length, boolean[] startValue) {
         if(startValue == null) return null;
 
-        LSRF lsrf = new LSRF(startValue);
+        LFSR lfsr = new LFSR(startValue);
         boolean[] key = new boolean[length];
 
         for(int i = 0; i < length; i++) {
-            key[i] = lsrf.getNext();
+            key[i] = lfsr.getNext();
         }
 
         return key;
@@ -99,42 +95,5 @@ public class StreamCypher {
         } else {
             return null;
         }
-    }
-}
-
-class LSRF {
-    class Bit {
-        boolean bit;
-        Bit next;
-
-        Bit(boolean in) {
-            bit = in;
-            next = null;
-        }
-    }
-
-    Bit first, last;
-
-    LSRF(boolean[] lsrf) {
-        for (boolean b : lsrf) add(b);
-    }
-
-    private void add(boolean bit) {
-        if(first == null) {
-            first = last = new Bit(bit);
-        } else {
-            last.next = new Bit(bit);
-            last = last.next;
-        }
-    }
-
-    boolean getNext() {
-        boolean returnable = first.bit;
-        first = first.next;
-
-        last.next = new Bit(returnable ^ last.bit);
-        last = last.next;
-
-        return returnable;
     }
 }

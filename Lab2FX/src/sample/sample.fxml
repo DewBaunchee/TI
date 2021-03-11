@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="584.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
       <AnchorPane prefHeight="126.0" prefWidth="364.0" style="-fx-border-color: #8A8A8A; -fx-background-color: #69D7FC;" BorderPane.alignment="CENTER">
          <children>
@@ -53,6 +53,14 @@
                </cursor>
             </Button>
             <Button fx:id="RC4Btn" layoutX="471.0" layoutY="85.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="97.0" text="RC4" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="14.0">
+               <font>
+                  <Font name="Courier New" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="printKeyBtn" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Print key" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="455.0">
                <font>
                   <Font name="Courier New" size="15.0" />
                </font>

@@ -1,17 +1,18 @@
 package sample;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
+import sample.Cypher.*;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class Controller {
 
@@ -47,8 +48,8 @@ public class Controller {
     @FXML
     void initialize() {
         transformBtn.setOnAction(actionEvent -> {
-            if ((opFile = new File(fileField.getText())).exists() && keyField.getText().length() > 1) {
-                executeTransform(opFile, keyField.getText());
+            if (fileField.getText().length() > 0 && Files.exists(Paths.get(fileField.getText())) && keyField.getText().length() > 0) {
+                executeTransform(Paths.get(fileField.getText()), keyField.getText());
             } else {
                 opFile = null;
                 showMsg("Error", "Fill all fields.", Alert.AlertType.ERROR);
@@ -56,7 +57,7 @@ public class Controller {
         });
 
         browseBtn.setOnAction(actionEvent -> {
-            File file = openFile("Choose plainfile");
+            File file = openFile("Choose plain file");
             if (file != null) fileField.setText(file.getAbsolutePath());
         });
 
@@ -65,10 +66,13 @@ public class Controller {
 
                 Platform.runLater(() -> {
                     try {
-                        printLog(StreamCypher.transformForLog(Files
-                                        .readAllBytes(Paths.get(fileField.getText())), keyField.getText()));
-                        byte[] answer = StreamCypher.transformByteArray(Files
-                                        .readAllBytes(Paths.get(fileField.getText())), keyField.getText());
+                        byte[] plain = Files.readAllBytes(Paths.get(fileField.getText()));
+                        if(plain.length > 1000) {
+                            printLog(StreamCypher.transformForLog(Arrays.copyOfRange(plain, 0, 1000), keyField.getText()));
+                        } else {
+                            printLog(StreamCypher.transformForLog(plain, keyField.getText()));
+                        }
+                        byte[] answer = StreamCypher.transformByteArray(plain, keyField.getText());
                         if (answer != null)
                             Files.write(Paths.get("temp.txt"), answer);
                     } catch (IOException e) {
@@ -108,28 +112,54 @@ public class Controller {
         });
 
         keyField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[01]*")) keyField.setText(oldValue);
+            if (!newValue.matches("[01]*")) {
+                keyField.setText(oldValue);
+                return;
+            }
+            if (newValue.length() == 34) {
+                enableBtns();
+            } else {
+                disableBtns();
+            }
             lengthLabel.setText("LFSR length: " + newValue.length());
         });
 
-        printKeyBtn.setOnAction(actionEvent -> {
-            if(keyField.getText().length() > 2) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Полином: a^").append(keyField.getText().length()).append(" + a^1 + 1").append("\n");
-                sb.append("Начальное состояние: ").append(keyField.getText()).append("\n\n");
+        printKeyBtn.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton() == MouseButton.PRIMARY) {
+                if (keyField.getText().length() > 3) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Полином: x^34 + x^15 + x^14 + x + 1").append("\n");
+                    sb.append("Начальное состояние: ").append(keyField.getText()).append("\n\n");
 
-                LFSR lfsr = new LFSR(StreamCypher.stringToBoolArr(keyField.getText()));
-                for(int i = 0; i < keyField.getText().length() + 20; i++) {
-                    sb.append("После такта №").append(i + 1).append(":\n");
-                    sb.append("Сгенерированный ключ: ").append(lfsr.getNext() ? "1" : "0").append("\n");
-                    sb.append("Состояние регистра: ").append(lfsr.toString()).append("\n\n");
+                    LFSR lfsr = new LFSR(StreamCypher.stringToBoolArr(keyField.getText()));
+                    for (int i = 0; i < keyField.getText().length() + 20; i++) {
+                        sb.append("После такта №").append(i + 1).append(":\n");
+                        sb.append("Сгенерированный ключ: ").append(lfsr.getNext() ? "1" : "0").append("\n");
+                        if(mouseEvent.getClickCount() != 2) {
+                            sb.append("Состояние регистра: ").append(lfsr.toString("(", ")")).append("\n\n\n");
+                        } else {
+                            sb.append("Состояние регистра: ").append(lfsr.toString()).append("\n\n\n");
+                        }
+                    }
+
+                    printLog(sb.toString());
+                } else {
+                    showMsg("Error", "Enter key with length that bigger than 3.", Alert.AlertType.ERROR);
                 }
-
-                printLog(sb.toString());
-            } else {
-                showMsg("Error", "Enter key.", Alert.AlertType.ERROR);
             }
         });
+    }
+
+    private void enableBtns() {
+        printKeyBtn.setDisable(false);
+        printBtn.setDisable(false);
+        transformBtn.setDisable(false);
+    }
+
+    private void disableBtns() {
+        printKeyBtn.setDisable(true);
+        printBtn.setDisable(true);
+        transformBtn.setDisable(true);
     }
 
     private void printLog(String message) {
@@ -146,12 +176,21 @@ public class Controller {
         return result.orElse(null);
     }
 
-    private void executeTransform(File plain, String startValue) {
-        StringBuilder outputPath = new StringBuilder(plain.getAbsolutePath());
+    private void executeTransform(Path plain, String startValue) {
+        StringBuilder outputPath = new StringBuilder(plain.toString());
         outputPath.insert(outputPath.lastIndexOf("."), "_transformed");
-        CypherSocket cs = new CypherSocket(new StreamCypher(StreamCypher.stringToBoolArr(startValue)));
-        new TransformThreadWriter(plain, cs).start();
-        new TransformThreadReader(new File(outputPath.toString()), cs).start();
+        new Thread(() -> {
+            try {
+                byte[] plainArr = Files.readAllBytes(plain);
+                byte[] cypherArr = StreamCypher.transformByteArray(plainArr, startValue);
+                if (cypherArr != null)
+                    Files.write(Paths.get(outputPath.toString()), cypherArr);
+                Platform.runLater(() -> showMsg("Cyphered", "Done!", Alert.AlertType.INFORMATION));
+            } catch (IOException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> showMsg("Error", "Error: " + e.getMessage(), Alert.AlertType.INFORMATION));
+            }
+        }).start();
     }
 
     public File openFile(String title) {
@@ -161,108 +200,11 @@ public class Controller {
         return fc.showOpenDialog(Main.root.getScene().getWindow());
     }
 
-    public void showMsg(String title, String content, Alert.AlertType type) {
+    public static void showMsg(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    class TransformThreadReader extends Thread {
-        private final File cyphered;
-        private final CypherSocket socket;
-
-        public TransformThreadReader(File inCyphered, CypherSocket inCS) {
-            cyphered = inCyphered;
-            socket = inCS;
-        }
-
-        @Override
-        public void run() {
-            BlockingQueue<Byte> fromCypher = socket.getInput();
-
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(cyphered);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                interrupt();
-            }
-
-            if (fos == null) {
-                socket.interrupt();
-                return;
-            }
-
-            try {
-                while (!socket.isInterrupted() || fromCypher.size() > 0) {
-                    Byte part = fromCypher.poll(2500, TimeUnit.MILLISECONDS);
-                    if(part == null) break;
-                    fos.write(part);
-                }
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                fos.close();
-                System.out.println("Cypher writer is closed.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Platform.runLater(() -> showMsg("Encrypting", "Done!", Alert.AlertType.INFORMATION));
-        }
-    }
-
-    class TransformThreadWriter extends Thread {
-        private final File plain;
-        private final CypherSocket socket;
-
-        public TransformThreadWriter(File inPlain, CypherSocket inCS) {
-            plain = inPlain;
-            socket = inCS;
-        }
-
-        @Override
-        public void run() {
-            BlockingQueue<Byte> toCypher = socket.getOutput();
-
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(plain);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                interrupt();
-            }
-
-            if (fis == null) {
-                socket.interrupt();
-                return;
-            }
-
-            try {
-                while (!isInterrupted()) {
-                    if (fis.available() == 0) {
-                        socket.interrupt();
-                        break;
-                    }
-                    int part = fis.read();
-                    System.out.println(part);
-                    toCypher.put((byte) part);
-                }
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            while (toCypher.size() > 0) ;
-
-            try {
-                fis.close();
-                System.out.println("Plain reader is closed.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

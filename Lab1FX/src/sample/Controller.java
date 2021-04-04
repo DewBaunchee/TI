@@ -189,9 +189,9 @@ public class Controller {
             try {
                 File file = new File(fileField.getText());
                 if (file.exists()) {
-                    Variant4.encrypt(new File(fileField.getText()), keyField.getText(), encryptionMethod);
+                    Cypher.encrypt(new File(fileField.getText()), keyField.getText(), encryptionMethod);
                 } else {
-                    TextInputDialog dialog = new TextInputDialog(Variant4
+                    TextInputDialog dialog = new TextInputDialog(Cypher
                             .encryptText(fileField.getText(), keyField.getText(), encryptionMethod));
                     dialog.setTitle("Answer");
                     dialog.setHeaderText("Cypher text:");
@@ -211,9 +211,9 @@ public class Controller {
             try {
                 File file = new File(fileField.getText());
                 if (file.exists()) {
-                    Variant4.decrypt(new File(fileField.getText()), keyField.getText(), encryptionMethod);
+                    Cypher.decrypt(new File(fileField.getText()), keyField.getText(), encryptionMethod);
                 } else {
-                    TextInputDialog dialog = new TextInputDialog(Variant4
+                    TextInputDialog dialog = new TextInputDialog(Cypher
                             .decryptText(fileField.getText(), keyField.getText(), encryptionMethod));
                     dialog.setTitle("Answer");
                     dialog.setHeaderText("Plain text:");
@@ -395,7 +395,8 @@ public class Controller {
                 case "Vigenere":
                     encryptionMethod = 1;
                     language = 2;
-                    keyField.setPromptText("Key");
+                    keyPass.setText("");
+                    keyField.setText("");
                     eyeBtn.setDisable(false);
                     keyField.setDisable(false);
                     keyPass.setVisible(true);
@@ -403,7 +404,8 @@ public class Controller {
                 case "Playfair":
                     encryptionMethod = 2;
                     language = 1;
-                    keyField.setPromptText("Unnecessary");
+                    keyPass.setText("Unnecessary");
+                    keyField.setText("Unnecessary");
                     eyeBtn.setDisable(true);
                     keyField.setDisable(true);
                     keyPass.setVisible(false);
@@ -411,7 +413,8 @@ public class Controller {
                 case "Rail fence":
                     encryptionMethod = 3;
                     language = 1;
-                    keyField.setPromptText("Key");
+                    keyPass.setText("");
+                    keyField.setText("");
                     eyeBtn.setDisable(false);
                     keyField.setDisable(false);
                     keyPass.setVisible(true);

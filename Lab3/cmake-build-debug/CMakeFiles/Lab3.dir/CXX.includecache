@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/University/TI/Lab3/bigIntegers/BigInteger.h
+iostream
+-
+vector
+-
+
+E:/University/TI/Lab3/main.cpp
+iostream
+-
+random
+-
+bigIntegers/BigInteger.h
+E:/University/TI/Lab3/bigIntegers/BigInteger.h
+

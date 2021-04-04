@@ -126,25 +126,30 @@ public class Controller {
 
         printKeyBtn.setOnMouseClicked(mouseEvent -> {
             if(mouseEvent.getButton() == MouseButton.PRIMARY) {
-                if (keyField.getText().length() > 3) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("Полином: x^34 + x^15 + x^14 + x + 1").append("\n");
-                    sb.append("Начальное состояние: ").append(keyField.getText()).append("\n\n");
-
-                    LFSR lfsr = new LFSR(StreamCypher.stringToBoolArr(keyField.getText()));
-                    for (int i = 0; i < keyField.getText().length() + 20; i++) {
-                        sb.append("После такта №").append(i + 1).append(":\n");
-                        sb.append("Сгенерированный ключ: ").append(lfsr.getNext() ? "1" : "0").append("\n");
-                        if(mouseEvent.getClickCount() != 2) {
-                            sb.append("Состояние регистра: ").append(lfsr.toString("(", ")")).append("\n\n\n");
-                        } else {
-                            sb.append("Состояние регистра: ").append(lfsr.toString()).append("\n\n\n");
-                        }
-                    }
-
-                    printLog(sb.toString());
+                if(mouseEvent.getClickCount() == 2) {
+                    printLog(StreamCypher.boolArrToString(StreamCypher
+                            .getWholeKey(60, StreamCypher.stringToBoolArr(keyField.getText()))));
                 } else {
-                    showMsg("Error", "Enter key with length that bigger than 3.", Alert.AlertType.ERROR);
+                    if (keyField.getText().length() > 3) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Полином: x^34 + x^15 + x^14 + x + 1").append("\n");
+                        sb.append("Начальное состояние: ").append(keyField.getText()).append("\n\n");
+
+                        LFSR lfsr = new LFSR(StreamCypher.stringToBoolArr(keyField.getText()));
+                        for (int i = 0; i < keyField.getText().length() + 20; i++) {
+                            sb.append("После такта №").append(i + 1).append(":\n");
+                            sb.append("Сгенерированный ключ: ").append(lfsr.getNext() ? "1" : "0").append("\n");
+                            if (mouseEvent.getClickCount() != 2) {
+                                sb.append("Состояние регистра: ").append(lfsr.toString("(", ")")).append("\n\n\n");
+                            } else {
+                                sb.append("Состояние регистра: ").append(lfsr.toString()).append("\n\n\n");
+                            }
+                        }
+
+                        printLog(sb.toString());
+                    } else {
+                        showMsg("Error", "Enter key with length that bigger than 3.", Alert.AlertType.ERROR);
+                    }
                 }
             }
         });

@@ -4,7 +4,7 @@
 #include "bigIntegers/BigInteger.h"
 
 int main() {
-    std::cout << (BigInteger("2") * BigInteger("13")) << std::endl;
+    std::cout << (BigInteger("6958") * BigInteger("1643")) << std::endl;
     return 0;
 }
 

@@ -68,21 +68,25 @@ BigInteger operator*(const BigInteger &operand1, const BigInteger &operand2) {
         min = &operand1;
     }
 
-    BigInteger answer = BigInteger(max->_length * 2);
+    BigInteger answer = BigInteger(max->_length + min->_length);
     answer.negative = operand1.negative ^ operand2.negative;
-    int remain = 0;
-    int i = 0;
-    while (i < min->_length) {
-        int mul = min->get(i) * max->get(i) + remain;
-        remain = mul / 10;
-        answer.set(i, (char) (mul % 10));
-        i++;
-    }
 
-    while (i < max->_length) {
-        int mul = max->get(i) + remain;
-        remain = mul / 10;
-        answer.set(i, (char) (mul % 10));
+    int i = 0;
+    int j;
+    int sumRemain;
+    while (i < min->_length) {
+        sumRemain = 0;
+        int remain = 0;
+
+        for(j = 0; j < max->_length; j++) {
+            int mul = min->get(i) * max->get(j) + remain;
+            int sum = mul % 10 + answer.get(j + i) + sumRemain;
+            remain = mul / 10;
+            sumRemain = sum / 10;
+            answer.set(j + i, (char) (sum % 10));
+        }
+
+        answer.set(j + i, (char) (answer.get(j + i) + remain + sumRemain));
         i++;
     }
     answer.shortenZeroes();

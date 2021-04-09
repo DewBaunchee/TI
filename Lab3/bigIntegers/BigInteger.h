@@ -7,26 +7,43 @@
 class BigInteger {
 private:
     char * _digits;
-    unsigned int _length;
-    bool negative;
+    int _length;
+    bool _negative;
 
-    void shortenDigits(unsigned int count);
-    void shortenZeroes();
+    void _shortenDigits(int count);
+    void _shortenZeroes();
+    BigInteger _concat(const BigInteger&) const;
+    struct divisionResult _divMod(const BigInteger&) const;
+    BigInteger _mulmod(BigInteger &, BigInteger &, const BigInteger &) const;
+    BigInteger _modulo(BigInteger, BigInteger, BigInteger) const;
+    bool _miller(BigInteger, int) const;
 public:
-    BigInteger(unsigned int);
-    BigInteger(const char *);
-    BigInteger pow(unsigned);
+    explicit BigInteger(int);
+    explicit BigInteger(const char *);
+    BigInteger pow(int);
     friend BigInteger operator*(const BigInteger&, const BigInteger&);
+    friend BigInteger operator/(const BigInteger&, const BigInteger&);
     friend BigInteger operator%(const BigInteger&, const BigInteger&);
     friend BigInteger operator+(const BigInteger&, const BigInteger&);
     friend BigInteger operator-(const BigInteger&, const BigInteger&);
     friend bool operator>(const BigInteger&, const BigInteger&);
     friend bool operator<(const BigInteger&, const BigInteger&);
     friend bool operator==(const BigInteger&, const BigInteger&);
+    friend bool operator!=(const BigInteger&, const BigInteger&);
     friend std::ostream& operator<< (std::ostream&, const BigInteger&);
+    explicit operator std::string() const;
 
-    void set(unsigned int index, char value);
-    char get(unsigned int index) const;
+    void set(int index, char value);
+    char get(int index) const;
+    int getLength() const;
+    BigInteger subInt(int) const;
+    BigInteger subInt(int, int) const;
+    bool isPrime(int) const;
+
+    static BigInteger random(unsigned int);
+    static BigInteger toBigInteger(long long);
+
+    BigInteger();
 };
 
 #endif //LAB3_BIGINTEGER_H

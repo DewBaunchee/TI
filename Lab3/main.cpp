@@ -1,44 +1,13 @@
 #include <iostream>
-#include <random>
 
 #include "bigIntegers/BigInteger.h"
+#include "rabin/RabinCypher.h"
 
 int main() {
-    std::cout << (BigInteger("6958") * BigInteger("1643")) << std::endl;
+    for(int i = 0; i < 256; i++) {
+        std::cout << i << (BigInteger::toBigInteger(i).isPrime(100) ? " is prime" : " is not prime") << std::endl;
+    }
+    struct Key key{BigInteger("123"), BigInteger("321")};
+    printf("Cypher: %s\n", RabinCypher::encrypt("12345", 5, key).array);
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*std::random_device randomDevice;
-    std::mt19937 gen(randomDevice());
-
-    unsigned int x = gen();
-    unsigned int y = gen();
-    unsigned int o = gen();
-    std::cout << "X:" << x << std::endl;
-    std::cout << "Y:" << y << std::endl;
-    std::cout << "O:" << o << std::endl;
-    std::cout << (x + y) % 5 << std::endl;
-    std::cout << x % 5 + y % 5 << std::endl;
-    std::cout << 30309 % 209 << std::endl;*/

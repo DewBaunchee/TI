@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <VBox prefHeight="244.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="174.0" prefWidth="600.0" style="-fx-background-color: #B5F0B5;">
+               <children>
+                  <TextArea fx:id="keysArea" editable="false" layoutX="14.0" layoutY="10.0" prefHeight="90.0" prefWidth="580.0" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                  </TextArea>
+                  <AnchorPane fx:id="inputPane" prefHeight="174.0" prefWidth="600.0" style="-fx-background-color: #B5F0B5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox layoutX="12.0" layoutY="13.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <Text fx:id="errorText" fill="#ff3333" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Private key">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <AnchorPane>
+                                 <children>
+                                    <Text layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="p:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    <TextField fx:id="pField" layoutX="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Text layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="q:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    <TextField fx:id="qField" layoutX="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Public key">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <AnchorPane>
+                                 <children>
+                                    <Text layoutY="3.4117202758789062" strokeType="OUTSIDE" strokeWidth="0.0" text="n:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    <TextField fx:id="nField" layoutX="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Text layoutY="2.411712646484375" strokeType="OUTSIDE" strokeWidth="0.0" text="b:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    <TextField fx:id="bField" layoutX="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0" style="-fx-border-color: #000; -fx-border-width: 1 0 0 0; -fx-background-color: #5ED85E;">
+               <children>
+                  <TextField fx:id="keyLengthField" prefHeight="30.0" prefWidth="109.0" promptText="Key length">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="generateBtn" mnemonicParsing="false" text="Generate">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="encryptBtn" mnemonicParsing="false" text="Encrypt">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="decryptBtn" mnemonicParsing="false" text="Decrypt">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <RadioButton fx:id="generateRB" mnemonicParsing="false" selected="true" text="Generate">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="inputMethod" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="inputRB" mnemonicParsing="false" text="Input" toggleGroup="$inputMethod" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <AnchorPane prefHeight="48.0" prefWidth="600.0" style="-fx-border-color: #000; -fx-border-width: 1 0 0 0; -fx-background-color: #83FD83;">
+               <children>
+                  <TextField fx:id="pathToFileField" layoutX="14.0" layoutY="11.0" prefHeight="30.0" prefWidth="470.0" promptText="Path to file" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="browseBtn" layoutX="534.0" layoutY="11.0" mnemonicParsing="false" text="Browse..." AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="Courier New" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TextArea fx:id="outputTextArea" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

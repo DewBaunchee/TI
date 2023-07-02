@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="digital.sign.ui.Controller">
+   <items>
+      <TextArea fx:id="logArea" editable="false" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+      <AnchorPane minHeight="310.0" minWidth="600.0" prefHeight="310.0" prefWidth="600.0" SplitPane.resizableWithParent="false">
+         <children>
+            <VBox layoutX="200.0" layoutY="88.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFFFDA#FFFFDA#FFFFDA#FFFFDA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Q:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="qField" promptText="Enter..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="P:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="pField" promptText="Enter..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="H:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="hField" promptText="Enter..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="X:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField promptText="Enter..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="xField" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label text="K:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="kField" promptText="Enter..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <Label fx:id="errorLabel" text="Error text" textFill="#9a0000">
+                     <VBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Courier New Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: #555;" />
+                  <AnchorPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="pathToFileField" prefHeight="26.0" prefWidth="517.0" promptText="Path to file..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="browseBtn" layoutX="524.0" mnemonicParsing="false" text="Browse" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="600.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <RadioButton fx:id="customHasherChoose" mnemonicParsing="false" selected="true" text="Custom hasher">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="hashChoose" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="sha1Choose" mnemonicParsing="false" text="SHA1" toggleGroup="$hashChoose">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <Button fx:id="signBtn" mnemonicParsing="false" text="Sign">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="checkSignBtn" mnemonicParsing="false" text="Check sign">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="generateBtn" mnemonicParsing="false" text="Generate keys">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
